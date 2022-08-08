@@ -1,0 +1,67 @@
+name: StagingDeploy
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Nodejsセットアップ
+      - name: Nodejs Setup
+        uses: actions/setup-node@v2
+        with:
+          node-version: "12.x"
+       
+      # Amplifyの設定ファイルをsecretsから生成
+      - name: Create aws-exports.js
+        run: |
+          mkdir -p src
+          touch src/aws-exports.js
+          echo ${{ secrets.AWS_EXPORTS }} | base64 --decode --ignore-garbage > src/aws-exports.js
+
+      # .envをsecretsから生成
+      - name: Create .env
+        run: |
+          touch .env
+          echo -e "GOOGLE_ANALYTICS_ID= ${{ secrets.GOOGLE_ANALYTICS_ID }}\nAPI_DEVELOPMENT_URL= ${{secrets.API_DEVELOPMENT_URL}}\nAPI_PRODUCTION_URL= ${{secrets.API_PRODUCTION_URL}}\nAPI_STAGING_URL= ${{secrets.API_STAGING_URL}}\nS3_RESOURCE_URL= ${{secrets.S3_RESOURCE_URL}}" >> .env
+
+      # nuxtの静的ファイル生成
+      - run: npm install
+      - run: npm run test
+      - run: npm run generate-staging
+
+      # 生成したフォルダをdeploy jobに渡す
+      - name: Upload generate result
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: dist/
+
+  deploy:
+    # build jobの処理終了待機
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # build jobのフォルダを受け取る
+      - name: Download generate result
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: dist/
+
+      - name: Publish to S3
+        uses: jakejarvis/s3-sync-action@master
+        env:
+          AWS_S3_BUCKET: ${{ secrets.S3_PRODUCTION_BUCKET_NAME}}
+          AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYMENT_IAM_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYMENT_IAM_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: "dist/"

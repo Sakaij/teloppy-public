@@ -1,0 +1,43 @@
+{
+    "Items": [{
+            "tagTitle": "ギミック",
+            "tagName": "gimmick"
+        },
+        {
+            "tagTitle": "ホラー",
+            "tagName": "horror"
+        },
+        {
+            "tagTitle": "おしゃれ",
+            "tagName": "stylish"
+        },
+        {
+            "tagTitle": "シンプル",
+            "tagName": "simple"
+        }, {
+            "tagTitle": "かわいい",
+            "tagName": "cute"
+        },
+        {
+            "tagTitle": "かっこいい",
+            "tagName": "cool"
+        },
+
+        {
+            "tagTitle": "１文字のみ",
+            "tagName": "one-character"
+        },
+        {
+            "tagTitle": "ブラウザのみ",
+            "tagName": "browser-only"
+        },
+        {
+            "tagTitle": "window系",
+            "tagName": "window"
+        },
+        {
+            "tagTitle": "3D",
+            "tagName": "3d"
+        }
+    ]
+}

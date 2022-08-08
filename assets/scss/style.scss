@@ -1,0 +1,229 @@
+@charset "UTF-8";
+
+@import "reset",
+"mixin",
+"module";
+
+
+
+html {
+    height: -webkit-fill-available;
+}
+
+
+html,
+body,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video,
+button,
+input {
+    @include gothic();
+}
+
+body {
+    background-color: #ffffff;
+}
+
+a,
+a:visited {
+    color: $main01_c;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.full-container {
+    width: 100%;
+    height: 100vh;
+    min-height: -webkit-fill-available;
+    position: relative;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 94%;
+    width: 1080px;
+    margin: 0 auto;
+}
+
+.m-container {
+    max-width: 94%;
+    width: 800px;
+    margin: 0 auto;
+}
+
+
+
+.telop-container {
+    letter-spacing: 0;
+}
+
+
+
+.page-list3 {
+    display: flex;
+    flex-wrap: wrap;
+
+    &_item {
+
+        position: relative;
+        width: calc(33.3% - 10px);
+        margin-bottom: 40px;
+        margin-right: 15px;
+
+        &:nth-child(3n) {
+            margin-right: 0;
+        }
+    }
+}
+
+@include middleDevice() {
+    .page-list3 {
+        justify-content: space-between;
+
+        &_item {
+            width: 49%;
+            min-width: 0;
+            margin-right: 0;
+        }
+    }
+}
+
+@include touchDevice() {
+
+    .page-list3,
+    .page-list2 {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        margin-bottom: 60px;
+
+        &_item {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+    }
+
+    .sp-container{
+        padding-right: 3%;
+        padding-left: 3%;
+        box-sizing: border-box;
+    }
+}
+
+//バックナンバーページ
+
+.backnumber-container {
+    padding: 0 10%;
+}
+
+.backnumber-link{
+    margin-bottom: 20px;
+}
+
+
+@include middleDevice() {
+    .backnumber-container {
+        padding: 0 4%;
+    }
+}
+
+@include touchDevice() {
+    .backnumber-list {
+        padding: 0 3%;
+    }
+
+    .backnumber-container {
+        padding: 0;
+    }
+
+
+
+    .backnumber-tag {
+        .tag-list {
+            flex-wrap: nowrap;
+
+            &_item {
+                flex: 0 0 auto;
+            }
+
+
+        }
+    }
+}
